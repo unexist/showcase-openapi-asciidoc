@@ -1,0 +1,8 @@
+= Showcase for Swagger with Asciidoc
+
+This project holds an example for Swagger with AsciiDoc
+
+== Links
+
+- https://asciidoxy.org
+- https://github.com/Swagger2Markup/swagger2markup
