@@ -23,6 +23,9 @@ hurl:
 	@hurl ./todo.hurl
 
 # Build & run
+clean:
+	rm -rf todo-service/target
+
 build:
 	mvn package
 
