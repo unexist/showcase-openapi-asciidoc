@@ -27,4 +27,4 @@ build:
 	mvn package
 
 run:
-	java -jar todo-service-ktor/target/todo-service-0.1-jar-with-dependencies.jar
+	java -jar todo-service/target/todo-service-0.1-jar-with-dependencies.jar
