@@ -40,6 +40,7 @@
         <ktor-redoc.version>5.0.0</ktor-redoc.version>
         <ktor-openapi.version>5.0.0</ktor-openapi.version>
         <koin.version>4.0.2</koin.version>
+        <koin-ktor3.version>4.1.0-Beta4</koin-ktor3.version>
     </properties>
 
     <dependencies>
@@ -100,9 +101,10 @@
         </dependency>
         <dependency>
             <groupId>io.insert-koin</groupId>
-            <artifactId>koin-ktor</artifactId>
-            <version>${koin.version}</version>
+            <artifactId>koin-ktor3</artifactId>
+            <version>${koin-ktor3.version}</version>
         </dependency>
+
         <dependency>
             <groupId>io.insert-koin</groupId>
             <artifactId>koin-logger-slf4j</artifactId>
