@@ -16,12 +16,21 @@
     <properties>
         <!-- Maven -->
         <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
+        <maven.compiler.parameters>true</maven.compiler.parameters>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+
+        <!-- Workaround to get a proper timestamp -->
+        <timestamp>${maven.build.timestamp}</timestamp>
 
         <!-- Build -->
         <java.version>21</java.version>
         <main.class>dev.unexist.showcase.todo.application.RestApplicationKt</main.class>
 
         <!-- Versions -->
+        <kotlin.version>2.1.10</kotlin.version>
+        <kotlin-logging-jvm.version>7.0.5</kotlin-logging-jvm.version>
         <ktor.version>3.1.1</ktor.version>
         <consul-client.version>1.5.3</consul-client.version>
         <cucumber.version>7.2.1</cucumber.version>
@@ -191,6 +200,9 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>

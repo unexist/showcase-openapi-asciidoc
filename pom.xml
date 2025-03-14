@@ -9,26 +9,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <!-- Project -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- Maven -->
-        <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-
-        <!-- Workaround to get a proper timestamp -->
-        <timestamp>${maven.build.timestamp}</timestamp>
-
-        <!-- Build -->
-        <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
-
-        <!-- Kotlin -->
-        <kotlin.version>2.1.10</kotlin.version>
-        <kotlin-logging-jvm.version>7.0.5</kotlin-logging-jvm.version>
     </properties>
 
     <licenses>
