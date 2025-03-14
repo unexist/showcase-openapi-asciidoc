@@ -15,6 +15,7 @@ import com.orbitz.consul.Consul
 import com.orbitz.consul.ConsulException
 import com.orbitz.consul.model.agent.ImmutableRegistration
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.ktor.server.application.Application
 import io.ktor.server.engine.CommandLineConfig
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.engine.loadCommonConfiguration
@@ -25,6 +26,7 @@ fun main(args: Array<String>) {
     val logger = KotlinLogging.logger {}
     val server = embeddedServer(
         factory = Netty,
+        module = Application::appModule,
         configure = {
             val cliConfig = CommandLineConfig(args)
             takeFrom(cliConfig.engineConfig)

@@ -30,6 +30,8 @@ import io.ktor.server.plugins.callid.generate
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics
@@ -49,7 +51,7 @@ val appModule = module {
     single { TodoService(get()) }
 }
 
-fun Application.module() {
+fun Application.appModule() {
     /* Install plugins */
     install(ContentNegotiation) {
         jackson {}
@@ -118,6 +120,10 @@ fun Application.module() {
     routing {
         /* Register app routes */
         todo()
+
+        get("hello") {
+            call.respondText("Hello World!")
+        }
 
         /* Swagger and OpenApi routes */
         route("api.json") {
