@@ -1,10 +1,10 @@
 package dev.unexist.showcase.todo.application
 
-import dev.unexist.showcase.todo.domain.todo.TodoRepository
 import dev.unexist.showcase.todo.domain.todo.TodoService
 import dev.unexist.showcase.todo.infrastructure.persistence.TodoListRepository
 import io.github.smiley4.ktoropenapi.OpenApi
-import io.ktor.serialization.Configuration
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import io.ktor.serialization.jackson.jackson
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -14,6 +14,7 @@ import io.ktor.server.plugins.callid.callIdMdc
 import io.ktor.server.plugins.callid.generate
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.routing.routing
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
@@ -27,8 +28,8 @@ import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
 val appModule = module {
-    single<TodoService>()
-    single<TodoRepository, TodoListRepository>()
+    single { TodoListRepository() }
+    single { TodoService(get()) }
 }
 
 fun Application.module() {
@@ -40,16 +41,16 @@ fun Application.module() {
         anyHost()
         allowCredentials = true
         allowNonSimpleContentTypes = true
-        method(HttpMethod.Get)
-        method(HttpMethod.Post)
-        method(HttpMethod.Put)
-        method(HttpMethod.Delete)
-        method(HttpMethod.Patch)
-        method(HttpMethod.Options)
-        header(HttpHeaders.ContentType)
-        header(HttpHeaders.Authorization)
-        header(HttpHeaders.AccessControlAllowHeaders)
-        header(HttpHeaders.AccessControlAllowOrigin)
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Delete)
+        allowMethod(HttpMethod.Patch)
+        allowMethod(HttpMethod.Options)
+        allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.Authorization)
+        allowHeader(HttpHeaders.AccessControlAllowHeaders)
+        allowHeader(HttpHeaders.AccessControlAllowOrigin)
     }
 
     install(MicrometerMetrics) {
