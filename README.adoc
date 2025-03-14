@@ -6,3 +6,4 @@ This project holds an example for Swagger with AsciiDoc
 
 - https://asciidoxy.org
 - https://github.com/Swagger2Markup/swagger2markup
+- https://github.com/InsertKoinIO/koin/issues/1716#issuecomment-2515042479
