@@ -12,9 +12,11 @@
 package dev.unexist.showcase.todo.application
 
 import dev.unexist.showcase.todo.adapter.todo
+import dev.unexist.showcase.todo.domain.todo.TodoRepository
 import dev.unexist.showcase.todo.domain.todo.TodoService
 import dev.unexist.showcase.todo.infrastructure.persistence.TodoListRepository
 import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.config.OutputFormat
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
@@ -41,18 +43,26 @@ import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics
 import io.micrometer.core.instrument.binder.system.FileDescriptorMetrics
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
 val appModule = module {
     /* Define both as singleton scope */
-    single { TodoListRepository() }
+    single { TodoListRepository() } bind TodoRepository::class
     single { TodoService(get()) }
 }
 
 fun Application.appModule() {
     /* Install plugins */
+    install(Koin) {
+        slf4jLogger()
+        modules(listOf(
+            appModule,
+        ))
+    }
+
     install(ContentNegotiation) {
         jackson {}
     }
@@ -95,6 +105,8 @@ fun Application.appModule() {
     }
 
     install(OpenApi) {
+        outputFormat = OutputFormat.JSON
+
         info {
             title = "OpenAPI for todo-service"
             version = "0.1"
@@ -110,21 +122,7 @@ fun Application.appModule() {
         }
     }
 
-    install(Koin) {
-        slf4jLogger()
-        modules(listOf(
-            appModule,
-        ))
-    }
-
     routing {
-        /* Register app routes */
-        todo()
-
-        get("hello") {
-            call.respondText("Hello World!")
-        }
-
         /* Swagger and OpenApi routes */
         route("api.json") {
             openApi()
@@ -139,5 +137,8 @@ fun Application.appModule() {
                 hideLoading = true
             }
         }
+
+        /* Register app routes */
+        todo()
     }
 }

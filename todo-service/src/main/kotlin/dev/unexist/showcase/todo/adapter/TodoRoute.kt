@@ -246,18 +246,4 @@ fun Routing.todo() {
             }
         }
     }
-
-    route("api.json") {
-        openApi()
-    }
-
-    route("swagger") {
-        swaggerUI("/api.json")
-    }
-
-    route("redoc") {
-        redoc("/api.json") {
-            hideLoading = true
-        }
-    }
 }
