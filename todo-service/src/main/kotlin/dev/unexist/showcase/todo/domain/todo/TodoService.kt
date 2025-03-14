@@ -13,7 +13,7 @@ package dev.unexist.showcase.todo.domain.todo
 
 import java.util.Optional
 
-class TodoService(@Inject @field: Default var todoRepository: TodoRepository) {
+class TodoService(private var todoRepository: TodoRepository) {
 
     /**
      * Create new {@link Todo} entry and store it in repository
