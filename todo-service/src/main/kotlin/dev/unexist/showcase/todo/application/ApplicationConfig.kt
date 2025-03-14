@@ -1,8 +1,12 @@
 package dev.unexist.showcase.todo.application
 
+import dev.unexist.showcase.todo.adapter.todo
 import dev.unexist.showcase.todo.domain.todo.TodoService
 import dev.unexist.showcase.todo.infrastructure.persistence.TodoListRepository
 import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.redoc
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.serialization.jackson.jackson
@@ -15,6 +19,7 @@ import io.ktor.server.plugins.callid.generate
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
@@ -28,11 +33,13 @@ import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
 val appModule = module {
+    /* Define both as singleton scope */
     single { TodoListRepository() }
     single { TodoService(get()) }
 }
 
 fun Application.module() {
+    /* Install plugins */
     install(ContentNegotiation) {
         jackson {}
     }
@@ -98,6 +105,22 @@ fun Application.module() {
     }
 
     routing {
+        /* Register app routes */
         todo()
+
+        /* Swagger and OpenApi routes */
+        route("api.json") {
+            openApi()
+        }
+
+        route("swagger") {
+            swaggerUI("/api.json")
+        }
+
+        route("redoc") {
+            redoc("/api.json") {
+                hideLoading = true
+            }
+        }
     }
 }
