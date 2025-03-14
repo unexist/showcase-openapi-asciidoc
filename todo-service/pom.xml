@@ -213,10 +213,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jvmTarget>${java.version}</jvmTarget>
-                    <args>
-                        <arg>-Xcoroutines=enable</arg>
-                    </args>
+                    <jvmTarget>11</jvmTarget>
                     <sourceDirs>
                         <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                     </sourceDirs>
