@@ -14,11 +14,9 @@ package dev.unexist.showcase.todo.infrastructure.persistence
 import dev.unexist.showcase.todo.domain.todo.Todo
 import dev.unexist.showcase.todo.domain.todo.TodoRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
-import jakarta.enterprise.context.ApplicationScoped
 import java.util.Collections
 import java.util.Optional
 
-@ApplicationScoped
 class TodoListRepository(val list: MutableList<Todo> = ArrayList()) : TodoRepository {
     val logger = KotlinLogging.logger {}
 

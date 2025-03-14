@@ -29,7 +29,7 @@
         <ktor-swagger-ui.version>5.0.0</ktor-swagger-ui.version>
         <ktor-redoc.version>5.0.0</ktor-redoc.version>
         <ktor-openapi.version>5.0.0</ktor-openapi.version>
-        <koin-ktor.version>4.0.2</koin-ktor.version>
+        <koin.version>4.0.2</koin.version>
     </properties>
 
     <dependencies>
@@ -80,8 +80,18 @@
         <!-- Injection -->
         <dependency>
             <groupId>io.insert-koin</groupId>
+            <artifactId>koin-core</artifactId>
+            <version>${koin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.insert-koin</groupId>
             <artifactId>koin-ktor</artifactId>
-            <version>${koin-ktor.version}</version>
+            <version>${koin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.insert-koin</groupId>
+            <artifactId>koin-logger-slf4j</artifactId>
+            <version>${koin.version}</version>
         </dependency>
 
         <!-- Swagger / OpenAPI -->

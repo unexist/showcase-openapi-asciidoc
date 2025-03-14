@@ -13,7 +13,6 @@ package dev.unexist.showcase.todo.domain.todo
 
 import java.util.Optional
 
-@ApplicationScoped
 class TodoService(@Inject @field: Default var todoRepository: TodoRepository) {
 
     /**
