@@ -23,11 +23,8 @@ hurl:
 	@hurl ./todo.hurl
 
 # Build & run
-build-all:
-	mvn package
-
 build:
-	mvn package -pl todo-service-ktor
+	mvn package
 
 run:
 	java -jar todo-service-ktor/target/todo-service-0.1-jar-with-dependencies.jar
