@@ -41,7 +41,6 @@
         <ktor-openapi.version>5.0.1</ktor-openapi.version>
         <koin.version>4.0.2</koin.version>
         <koin-ktor3.version>4.1.0-Beta4</koin-ktor3.version>
-        <kotlinx-serialization-json-jvm.version>1.8.0</kotlinx-serialization-json-jvm.version>
     </properties>
 
     <dependencies>
@@ -98,11 +97,6 @@
             <artifactId>ktor-serialization-jackson-jvm</artifactId>
             <version>${ktor.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-serialization-kotlinx-json-jvm</artifactId>
-            <version>${ktor.version}</version>
-        </dependency>
 
         <!-- Injection -->
         <dependency>
@@ -115,7 +109,6 @@
             <artifactId>koin-ktor3</artifactId>
             <version>${koin-ktor3.version}</version>
         </dependency>
-
         <dependency>
             <groupId>io.insert-koin</groupId>
             <artifactId>koin-logger-slf4j</artifactId>
@@ -123,11 +116,6 @@
         </dependency>
 
         <!-- Swagger / OpenAPI -->
-        <dependency>
-            <groupId>org.jetbrains.kotlinx</groupId>
-            <artifactId>kotlinx-serialization-json-jvm</artifactId>
-            <version>${kotlinx-serialization-json-jvm.version}</version>
-        </dependency>
         <dependency>
             <groupId>io.github.smiley4</groupId>
             <artifactId>schema-kenerator-core</artifactId>

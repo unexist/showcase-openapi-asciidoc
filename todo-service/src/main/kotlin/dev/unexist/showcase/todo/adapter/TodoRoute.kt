@@ -16,11 +16,8 @@ import dev.unexist.showcase.todo.domain.todo.TodoBase
 import dev.unexist.showcase.todo.domain.todo.TodoService
 import io.github.smiley4.ktoropenapi.delete
 import io.github.smiley4.ktoropenapi.get
-import io.github.smiley4.ktoropenapi.put
-import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktoropenapi.post
-import io.github.smiley4.ktorredoc.redoc
-import io.github.smiley4.ktorswaggerui.swaggerUI
+import io.github.smiley4.ktoropenapi.put
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond

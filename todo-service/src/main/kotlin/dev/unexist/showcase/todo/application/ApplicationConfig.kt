@@ -32,8 +32,6 @@ import io.ktor.server.plugins.callid.generate
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
-import io.ktor.server.response.respondText
-import io.ktor.server.routing.get
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics
@@ -105,8 +103,6 @@ fun Application.appModule() {
     }
 
     install(OpenApi) {
-        outputFormat = OutputFormat.JSON
-
         info {
             title = "OpenAPI for todo-service"
             version = "0.1"
@@ -123,6 +119,9 @@ fun Application.appModule() {
     }
 
     routing {
+        /* Register app routes */
+        todo()
+
         /* Swagger and OpenApi routes */
         route("api.json") {
             openApi()
@@ -137,8 +136,5 @@ fun Application.appModule() {
                 hideLoading = true
             }
         }
-
-        /* Register app routes */
-        todo()
     }
 }
