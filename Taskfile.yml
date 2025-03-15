@@ -1,0 +1,36 @@
+version: '3'
+env:
+  VERSION: '{{.VERSION | default "0.1"}}'
+  PORT: '{{.PORT | default "8080"}}'
+  HOST: '{{.HOST | default "localhost"}}'
+
+tasks:
+  todo:
+    vars:
+      JSON: '{ "description": "Todo string", "title": "Todo string" }'
+    cmds:
+      - "curl -X POST 'http://{{.HOST}}:{{.PORT}}/todo' -H 'Content-Type: application/json' -d '{{.JSON}}'"
+
+  list:
+    cmds:
+      - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/todo' -H 'accept: */*' | jq ."
+
+  test:
+    cmds:
+      - hurl --test todo.hurl
+
+  build:
+    cmds:
+      - mvn package
+    sources:
+      - todo-service/src/main/kotlin//**/*.ht
+    generates:
+      - todo-service/target/todo-service-{{.VERSION}}-jar-with-dependencies.jar
+
+  run:
+    cmds:
+      - java -jar todo-service/target/todo-service-{{.VERSION}}-jar-with-dependencies.jar
+
+  clean:
+    cmds:
+      - cargo clea

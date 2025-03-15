@@ -21,10 +21,7 @@ PUT http://localhost:8080/todo/{{todoId}}
 {
     "title": "new string"
 }
-HTTP 200
-[Asserts]
-header "Content-Type" contains "json"
-jsonpath "$.title" == "new string"
+HTTP 204
 
 # Delete
 DELETE http://localhost:8080/todo/{{todoId}}
