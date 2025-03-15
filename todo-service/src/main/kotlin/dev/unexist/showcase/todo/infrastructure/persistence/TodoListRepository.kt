@@ -30,11 +30,11 @@ class TodoListRepository(val list: MutableList<Todo> = ArrayList()) : TodoReposi
         var ret = false
 
         try {
-            list[todo.id] = todo
+            list[todo.id - 1] = todo
 
             ret = true
         } catch (e: IndexOutOfBoundsException) {
-            logger.warn { "update: id={$todo.id} not found" }
+            logger.warn { "update: id=${todo.id} not found" }
         }
 
         return ret
@@ -48,7 +48,7 @@ class TodoListRepository(val list: MutableList<Todo> = ArrayList()) : TodoReposi
 
             ret = true
         } catch (e: IndexOutOfBoundsException) {
-            logger.warn { "deleteById: id={$id} not found" }
+            logger.warn { "deleteById: id=${id} not found" }
         }
 
         return ret
