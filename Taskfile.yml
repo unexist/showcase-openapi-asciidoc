@@ -23,7 +23,7 @@ tasks:
     cmds:
       - mvn package
     sources:
-      - todo-service/src/main/kotlin//**/*.ht
+      - todo-service/src/main/kotlin/**/*.kt
     generates:
       - todo-service/target/todo-service-{{.VERSION}}-jar-with-dependencies.jar
 
