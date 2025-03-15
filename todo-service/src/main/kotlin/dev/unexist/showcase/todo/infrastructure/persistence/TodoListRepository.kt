@@ -44,7 +44,7 @@ class TodoListRepository(val list: MutableList<Todo> = ArrayList()) : TodoReposi
         var ret = false
 
         try {
-            list.removeAt(id)
+            list.removeAt(id - 1)
 
             ret = true
         } catch (e: IndexOutOfBoundsException) {
