@@ -13,9 +13,9 @@ package dev.unexist.showcase.todo.domain.todo
 
 data class Todo(
     var id: Int = 0,
-    override var title: String = "",
-    override var description: String = "",
-    override var done: Boolean = false,
+    override var title: String? = "",
+    override var description: String? = "",
+    override var done: Boolean? = false,
     override var dueDate: DueDate? = null) : TodoBase(title, description, done, dueDate) {
 
     /**

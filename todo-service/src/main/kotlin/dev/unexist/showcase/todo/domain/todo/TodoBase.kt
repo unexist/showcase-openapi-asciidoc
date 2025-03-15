@@ -16,5 +16,5 @@ import dev.unexist.showcase.todo.infrastructure.NoArg
 
 @NoArg
 @JsonInclude(JsonInclude.Include.NON_NULL)
-open class TodoBase(open var title: String, open var description: String,
-                    open var done: Boolean, open var dueDate: DueDate?)
+open class TodoBase(open var title: String?, open var description: String?,
+                    open var done: Boolean?, open var dueDate: DueDate?)
