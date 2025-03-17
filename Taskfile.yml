@@ -33,4 +33,4 @@ tasks:
 
   clean:
     cmds:
-      - cargo clea
+      - mvn clean
