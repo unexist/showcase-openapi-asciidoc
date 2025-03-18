@@ -1,0 +1,322 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "OpenAPI for todo-service",
+    "contact" : {
+      "name" : "Christoph Kappel",
+      "url" : "https://unexist.dev",
+      "email" : "christoph@unexist.dev"
+    },
+    "license" : {
+      "name" : "Apache License v2.0",
+      "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+    },
+    "version" : "0.1"
+  },
+  "externalDocs" : {
+    "url" : "/"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080",
+    "description" : "Development Server"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/todo" : {
+      "get" : {
+        "tags" : [ ],
+        "description" : "Get all todos",
+        "operationId" : "getAll",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/dev.unexist.showcase.todo.domain.todo.Todo"
+                  },
+                  "title" : "List<Todo>"
+                },
+                "examples" : {
+                  "Todo List" : {
+                    "value" : [ {
+                      "id" : 1,
+                      "title" : "Title",
+                      "description" : "Description",
+                      "done" : false
+                    } ]
+                  }
+                }
+              }
+            }
+          },
+          "201" : {
+            "description" : "Nothing found",
+            "headers" : { }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "headers" : { }
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "tags" : [ ],
+        "description" : "Create new todo",
+        "operationId" : "addTodo",
+        "parameters" : [ ],
+        "requestBody" : {
+          "description" : "Todo to add to the store",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/dev.unexist.showcase.todo.domain.todo.Todo"
+              },
+              "examples" : {
+                "New Todo" : {
+                  "value" : {
+                    "id" : 0,
+                    "title" : "Title",
+                    "description" : "Description",
+                    "done" : false
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/dev.unexist.showcase.todo.domain.todo.Todo"
+                },
+                "examples" : {
+                  "New Todo" : {
+                    "value" : {
+                      "id" : 1,
+                      "title" : "Title",
+                      "description" : "Description",
+                      "done" : false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "Bad data",
+            "headers" : { }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "headers" : { }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/todo/{id}" : {
+      "get" : {
+        "tags" : [ ],
+        "description" : "Get todo by id",
+        "operationId" : "getTodoById",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of todo to fetch",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "title" : "Long"
+          },
+          "example" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/dev.unexist.showcase.todo.domain.todo.Todo"
+                },
+                "examples" : {
+                  "Todo" : {
+                    "value" : {
+                      "id" : 0,
+                      "title" : "Title",
+                      "description" : "Description",
+                      "done" : false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Todo not found",
+            "headers" : { }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "headers" : { }
+          }
+        },
+        "deprecated" : false
+      },
+      "put" : {
+        "tags" : [ ],
+        "description" : "Update todo by a single ID",
+        "operationId" : "updateTodoById",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of todo to fetch",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "title" : "Long"
+          },
+          "example" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/dev.unexist.showcase.todo.domain.todo.Todo"
+                },
+                "examples" : {
+                  "Todo" : {
+                    "value" : {
+                      "id" : 0,
+                      "title" : "Title",
+                      "description" : "Description",
+                      "done" : false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204" : {
+            "description" : "Todo updated",
+            "headers" : { }
+          },
+          "404" : {
+            "description" : "Todo not found",
+            "headers" : { }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "headers" : { }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "tags" : [ ],
+        "description" : "Delete todo by a single ID",
+        "operationId" : "deleteTodoById",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id of todo to fetch",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "title" : "Long"
+          },
+          "example" : 1
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Todo deleted",
+            "headers" : { }
+          },
+          "404" : {
+            "description" : "Todo not found",
+            "headers" : { }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "headers" : { }
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "dev.unexist.showcase.todo.domain.todo.Todo" : {
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "type" : [ "null", "string" ],
+            "title" : "String"
+          },
+          "done" : {
+            "type" : [ "null", "boolean" ],
+            "title" : "Boolean"
+          },
+          "dueDate" : {
+            "oneOf" : [ {
+              "type" : "null"
+            }, {
+              "$ref" : "#/components/schemas/dev.unexist.showcase.todo.domain.todo.DueDate"
+            } ]
+          },
+          "id" : {
+            "type" : "integer",
+            "format" : "int32",
+            "title" : "Int"
+          },
+          "title" : {
+            "type" : [ "null", "string" ],
+            "title" : "String"
+          }
+        },
+        "required" : [ "id" ],
+        "title" : "Todo"
+      },
+      "dev.unexist.showcase.todo.domain.todo.DueDate" : {
+        "type" : "object",
+        "properties" : {
+          "due" : {
+            "$ref" : "#/components/schemas/java.time.LocalDate"
+          },
+          "start" : {
+            "$ref" : "#/components/schemas/java.time.LocalDate"
+          }
+        },
+        "required" : [ "due", "start" ],
+        "title" : "DueDate"
+      },
+      "java.time.LocalDate" : {
+        "type" : "object",
+        "properties" : { },
+        "title" : "LocalDate"
+      }
+    },
+    "examples" : { }
+  },
+  "webhooks" : { }
+}
