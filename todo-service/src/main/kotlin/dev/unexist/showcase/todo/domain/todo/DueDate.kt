@@ -12,7 +12,7 @@
 package dev.unexist.showcase.todo.domain.todo;
 
 import dev.unexist.showcase.todo.infrastructure.NoArg
-import dev.unexist.showcase.todo.infrastructure.serde.DateSerializer
+import dev.unexist.showcase.todo.infrastructure.DateSerializer
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
 
