@@ -11,12 +11,15 @@
 
 package dev.unexist.showcase.todo.domain.todo
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Todo(
     var id: Int = 0,
-    override var title: String? = "",
-    override var description: String? = "",
-    override var done: Boolean? = false,
-    override var dueDate: DueDate? = null) : TodoBase(title, description, done, dueDate) {
+    var title: String? = "",
+    var description: String? = "",
+    var done: Boolean? = false,
+    var dueDate: DueDate? = null) {
 
     /**
      * Update values from base
@@ -24,7 +27,7 @@ data class Todo(
      * @param  base  Todo base class
      **/
 
-    fun update(base: TodoBase) {
+    fun update(base: Todo) {
         this.title = base.title
         this.description = base.description
         this.done = base.done

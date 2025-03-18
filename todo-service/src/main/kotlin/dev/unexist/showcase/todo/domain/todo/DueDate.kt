@@ -11,24 +11,13 @@
 
 package dev.unexist.showcase.todo.domain.todo;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import dev.unexist.showcase.todo.infrastructure.NoArg
-import dev.unexist.showcase.todo.infrastructure.serde.DateDeserializer
 import dev.unexist.showcase.todo.infrastructure.serde.DateSerializer
+import kotlinx.serialization.Serializable
 import java.time.LocalDate
 
 @NoArg
+@Serializable(with = DateSerializer::class)
 data class DueDate(
-    @field:JsonSerialize(using = DateSerializer::class)
-    @field:JsonDeserialize(using = DateDeserializer::class)
     val start: LocalDate,
-
-    @field:JsonSerialize(using = DateSerializer::class)
-    @field:JsonDeserialize(using = DateDeserializer::class)
-    val due: LocalDate) {
-
-    companion object {
-        const val DATE_PATTERN = "yyyy-MM-dd"
-    }
-}
+    val due: LocalDate)

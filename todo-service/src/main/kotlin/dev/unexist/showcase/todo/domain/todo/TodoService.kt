@@ -23,11 +23,7 @@ class TodoService(private var todoRepository: TodoRepository) {
      * @return Either id of the entry on success; otherwise {@code -1}
      **/
 
-    fun create(base: TodoBase): Optional<Todo> {
-        val todo: Todo = Todo()
-
-        todo.update(base);
-
+    fun create(todo: Todo): Optional<Todo> {
         val retval = this.todoRepository.add(todo);
 
         return Optional.ofNullable(if (retval) todo else null)
@@ -42,7 +38,7 @@ class TodoService(private var todoRepository: TodoRepository) {
      * @return Either {@code true} on success; otherwise {@code false}
      **/
 
-    fun update(id: Int, base: TodoBase): Boolean {
+    fun update(id: Int, base: Todo): Boolean {
         val todo: Optional<Todo> = this.findById(id)
 
         var ret = false;

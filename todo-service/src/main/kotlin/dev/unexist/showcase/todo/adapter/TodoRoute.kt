@@ -12,7 +12,6 @@
 package dev.unexist.showcase.todo.adapter
 
 import dev.unexist.showcase.todo.domain.todo.Todo
-import dev.unexist.showcase.todo.domain.todo.TodoBase
 import dev.unexist.showcase.todo.domain.todo.TodoService
 import io.github.smiley4.ktoropenapi.delete
 import io.github.smiley4.ktoropenapi.get
@@ -63,11 +62,11 @@ fun Routing.todo() {
             operationId = "addTodo"
             description = "Create new todo"
             request {
-                body<TodoBase> {
+                body<Todo> {
                     description = "Todo to add to the store"
                     required = true
                     example("New Todo") {
-                        value = TodoBase(
+                        value = Todo(
                             title = "Title",
                             description = "Description",
                             done = false,
@@ -99,8 +98,8 @@ fun Routing.todo() {
                 }
             }
         }) {
-            val todoBase: TodoBase = call.receive()
-            val todo: Optional<Todo> = todoService.create(todoBase)
+            val base: Todo = call.receive()
+            val todo: Optional<Todo> = todoService.create(base)
 
             if (todo.isPresent) {
                 call.respond(message = todo.get(), status = HttpStatusCode.Created)
@@ -195,10 +194,10 @@ fun Routing.todo() {
                 }
             }) {
                 val id: String? = call.parameters["id"]
-                val todoBase: TodoBase = call.receive()
+                val base: Todo = call.receive()
 
                 if (null != id) {
-                    if (todoService.update(id.toInt(), todoBase)) {
+                    if (todoService.update(id.toInt(), base)) {
                         call.respond(HttpStatusCode.NoContent)
                     } else {
                         call.respond(HttpStatusCode.NotFound)
