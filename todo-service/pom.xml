@@ -30,6 +30,7 @@
 
         <!-- Versions -->
         <kotlin.version>2.1.10</kotlin.version>
+        <kotlinx-serialization-json.version>1.8.0</kotlinx-serialization-json.version>
         <kotlin-logging-jvm.version>7.0.5</kotlin-logging-jvm.version>
         <logback-classic.version>1.5.11</logback-classic.version>
         <ktor.version>3.1.1</ktor.version>
@@ -100,8 +101,20 @@
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
-            <artifactId>ktor-serialization-jackson-jvm</artifactId>
+            <artifactId>ktor-serialization-kotlinx-json-jvm</artifactId>
             <version>${ktor.version}</version>
+        </dependency>
+
+        <!-- Kotlinx -->
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-serialization-json</artifactId>
+            <version>${kotlinx-serialization-json.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-datetime</artifactId>
+            <version>0.6.2</version>
         </dependency>
 
         <!-- Injection -->
@@ -257,7 +270,17 @@
                     <sourceDirs>
                         <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                     </sourceDirs>
+                    <compilerPlugins>
+                        <plugin>kotlinx-serialization</plugin>
+                    </compilerPlugins>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-serialization</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
