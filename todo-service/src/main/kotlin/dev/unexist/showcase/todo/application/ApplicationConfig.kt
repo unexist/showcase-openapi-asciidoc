@@ -23,7 +23,7 @@ import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.serialization.jackson.jackson
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.metrics.micrometer.MicrometerMetrics
@@ -63,7 +63,7 @@ fun Application.appModule() {
     }
 
     install(ContentNegotiation) {
-        jackson {}
+        json()
     }
 
     install(CORS) {
