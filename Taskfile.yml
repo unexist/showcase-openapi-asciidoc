@@ -15,6 +15,10 @@ tasks:
     cmds:
       - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/todo' -H 'accept: */*' | jq ."
 
+  api:
+    cmds:
+      - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/api.json' -H 'accept: */*' | jq ."
+
   test:
     cmds:
       - hurl --test todo.hurl
