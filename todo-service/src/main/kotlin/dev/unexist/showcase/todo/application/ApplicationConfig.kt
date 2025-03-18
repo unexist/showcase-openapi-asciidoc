@@ -17,6 +17,7 @@ import dev.unexist.showcase.todo.domain.todo.TodoService
 import dev.unexist.showcase.todo.infrastructure.persistence.TodoListRepository
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.config.OutputFormat
+import io.github.smiley4.ktoropenapi.config.SchemaGenerator
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
@@ -103,6 +104,8 @@ fun Application.appModule() {
     }
 
     install(OpenApi) {
+        outputFormat = OutputFormat.JSON
+
         info {
             title = "OpenAPI for todo-service"
             version = "0.1"
@@ -116,12 +119,17 @@ fun Application.appModule() {
                 url = "https://www.apache.org/licenses/LICENSE-2.0"
             }
         }
+        server {
+            url = "http://localhost:8080"
+            description = "Development Server"
+        }
+
+        schemas {
+            generator = SchemaGenerator.reflection {}
+        }
     }
 
     routing {
-        /* Register app routes */
-        todo()
-
         /* Swagger and OpenApi routes */
         route("api.json") {
             openApi()
@@ -136,5 +144,8 @@ fun Application.appModule() {
                 hideLoading = true
             }
         }
+
+        /* Register app routes */
+        todo()
     }
 }
