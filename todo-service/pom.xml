@@ -41,6 +41,7 @@
         <ktor-openapi.version>5.0.1</ktor-openapi.version>
         <koin.version>4.0.2</koin.version>
         <koin-ktor3.version>4.1.0-Beta4</koin-ktor3.version>
+        <swagger-parser.version>2.1.22</swagger-parser.version>
     </properties>
 
     <dependencies>
@@ -133,6 +134,16 @@
         </dependency>
         <dependency>
             <groupId>io.github.smiley4</groupId>
+            <artifactId>schema-kenerator-serialization</artifactId>
+            <version>${schema-kenerator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.smiley4</groupId>
+            <artifactId>schema-kenerator-jsonschema</artifactId>
+            <version>${schema-kenerator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.smiley4</groupId>
             <artifactId>schema-kenerator-swagger</artifactId>
             <version>${schema-kenerator.version}</version>
         </dependency>
@@ -155,6 +166,11 @@
             <groupId>io.github.smiley4</groupId>
             <artifactId>ktor-openapi</artifactId>
             <version>${ktor-openapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>${swagger-parser.version}</version>
         </dependency>
 
         <!-- Logging -->
