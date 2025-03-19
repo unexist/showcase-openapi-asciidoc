@@ -8,3 +8,4 @@ This project holds an example for Swagger with AsciiDoc
 - https://github.com/Swagger2Markup/swagger2markup
 - https://dcporter65.github.io/swagger-asciidoc-primer/
 - https://github.com/InsertKoinIO/koin/issues/1716#issuecomment-2515042479
+- https://github.com/Luftfartsverket/openapi-to-asciidoc
