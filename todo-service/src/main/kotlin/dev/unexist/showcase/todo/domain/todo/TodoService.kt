@@ -1,5 +1,5 @@
 /**
- * @package Showcase-Swagger-Asciidoc
+ * @package Showcase-Openapi-Asciidoc
  *
  * @file Todo domain service
  * @copyright 2025-present Christoph Kappel <christoph@unexist.dev>

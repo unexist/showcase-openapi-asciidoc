@@ -1,5 +1,5 @@
 /**
- * @package Showcase-Swagger-Asciidoc
+ * @package Showcase-Openapi-Asciidoc
  *
  * @file Stupid integration test
  * @copyright 2023-present Christoph Kappel <christoph@unexist.dev>

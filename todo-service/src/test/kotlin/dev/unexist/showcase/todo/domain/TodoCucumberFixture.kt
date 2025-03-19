@@ -1,5 +1,5 @@
 /**
- * @package Showcase-Swagger-Asciidoc
+ * @package Showcase-Openapi-Asciidoc
  *
  * @file Todo Cucumber Steps
  * @copyright 2023-present Christoph Kappel <christoph@unexist.dev>

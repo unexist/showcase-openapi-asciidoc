@@ -1,5 +1,5 @@
 /**
- * @package Showcase-Swagger-Asciidoc
+ * @package Showcase-Openapi-Asciidoc
  *
  * @file Todo module
  * @copyright 2025-present Christoph Kappel <christoph@unexist.dev>
@@ -34,6 +34,8 @@ fun Routing.todo() {
             description = "Get all todos"
             response {
                 code(HttpStatusCode.OK) {
+                    description = "Todo list has been created"
+
                     body<List<Todo>> {
                         description = "List of todo"
                         example("Todo List") {
@@ -77,6 +79,8 @@ fun Routing.todo() {
             }
             response {
                 code(HttpStatusCode.Created) {
+                    description = "Todo has been created"
+
                     body<Todo> {
                         description = "The created todo"
                         example("New Todo") {
@@ -123,6 +127,8 @@ fun Routing.todo() {
                 }
                 response {
                     code(HttpStatusCode.OK) {
+                        description = "Todo has been fetched"
+
                         body<Todo>{
                             description = "The found todo with the given id"
                             example("Todo") {
@@ -170,6 +176,8 @@ fun Routing.todo() {
                 }
                 response {
                     code(HttpStatusCode.OK) {
+                        description = "Todo has been updated"
+
                         body<Todo>{
                             description = "The found todo with the given id"
                             example("Todo") {

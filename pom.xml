@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.unexist.showcase</groupId>
-    <artifactId>showcase-swagger-asciidoc</artifactId>
+    <artifactId>showcase-openapi-asciidoc</artifactId>
     <version>0.1</version>
     <packaging>pom</packaging>
 
