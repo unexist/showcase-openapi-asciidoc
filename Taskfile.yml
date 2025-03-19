@@ -1,6 +1,9 @@
 version: '3'
 env:
-  VERSION: '{{.VERSION | default "0.1"}}'
+  JAR_VERSION: '{{.JAR_VERSION | default "0.1"}}'
+  CONTAINER_VERSION: '{{.CONTAINER_VERSION | default "0.1"}}'
+  CONTAINER_IMAGE: '{{.CONTAINER_IMAGE | default "openapi-builder"}}'
+  MNT_PATH: '{{.MNT_PATH | default "/openapi"}}'
   PORT: '{{.PORT | default "8080"}}'
   HOST: '{{.HOST | default "localhost"}}'
 
@@ -15,9 +18,19 @@ tasks:
     cmds:
       - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/todo' -H 'accept: */*' | jq ."
 
-  api:
+  refresh-api:
+    internal: true
     cmds:
-      - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/api.json' -H 'accept: */*' | jq ."
+      - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/api.json' -H 'accept: */*' -o openapi.json"
+    sources:
+      - todo-service/target/todo-service-{{.JAR_VERSION}}-jar-with-dependencies.jar
+    generates:
+      - openapi.json
+
+  api:
+    deps: [refresh-api]
+    cmds:
+      - cat openapi.json | jq .
 
   test:
     cmds:
@@ -29,12 +42,19 @@ tasks:
     sources:
       - todo-service/src/main/kotlin/**/*.kt
     generates:
-      - todo-service/target/todo-service-{{.VERSION}}-jar-with-dependencies.jar
+      - todo-service/target/todo-service-{{.JAR_VERSION}}-jar-with-dependencies.jar
 
   run:
     cmds:
-      - java -jar todo-service/target/todo-service-{{.VERSION}}-jar-with-dependencies.jar
+      - java -jar todo-service/target/todo-service-{{.JAR_VERSION}}-jar-with-dependencies.jar
 
   clean:
     cmds:
       - mvn clean
+
+  asciidoc:
+    cmds:
+      - |
+        podman run --rm -v .:{{.MNT_PATH}} \
+          -it docker.io/openapitools/openapi-generator-cli generate -g asciidoc \
+          -i {{.MNT_PATH}}/openapi.json -o {{.MNT_PATH}}/asciidoc
