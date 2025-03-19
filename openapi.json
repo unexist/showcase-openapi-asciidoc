@@ -30,6 +30,7 @@
         "parameters" : [ ],
         "responses" : {
           "200" : {
+            "description" : "Todo list has been created",
             "headers" : { },
             "content" : {
               "application/json" : {
@@ -92,6 +93,7 @@
         },
         "responses" : {
           "201" : {
+            "description" : "Todo has been created",
             "headers" : { },
             "content" : {
               "application/json" : {
@@ -144,6 +146,7 @@
         } ],
         "responses" : {
           "200" : {
+            "description" : "Todo has been fetched",
             "headers" : { },
             "content" : {
               "application/json" : {
@@ -194,6 +197,7 @@
         } ],
         "responses" : {
           "200" : {
+            "description" : "Todo has been updated",
             "headers" : { },
             "content" : {
               "application/json" : {
