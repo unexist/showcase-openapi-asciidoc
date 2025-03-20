@@ -93,5 +93,3 @@ tasks:
             -e CONFLUENCE_USER \
             -e CONFLUENCE_TOKEN \
             sh -c "cd $(MOUNT_PATH) && mvn -f pom.xml -P generate-docs-and-publish generate-resources"
-
-docs: doxygen asciidoxy asciidoc
