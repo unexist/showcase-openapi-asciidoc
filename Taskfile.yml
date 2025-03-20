@@ -3,7 +3,7 @@ env:
   JAR_VERSION: '{{.JAR_VERSION | default "0.1"}}'
   CONTAINER_VERSION: '{{.CONTAINER_VERSION | default "0.1"}}'
   CONTAINER_IMAGE: '{{.CONTAINER_IMAGE | default "openapi-builder"}}'
-  MNT_PATH: '{{.MNT_PATH | default "/openapi"}}'
+  MOUNT_PATH: '{{.MOUNT_PATH | default "/openapi"}}'
   PORT: '{{.PORT | default "8080"}}'
   HOST: '{{.HOST | default "localhost"}}'
 
@@ -51,10 +51,47 @@ tasks:
   clean:
     cmds:
       - mvn clean
+      - rm -rf src/site/asciidoc/generated
 
-  asciidoc:
+  generate:
     cmds:
       - |
-        podman run --rm -v .:{{.MNT_PATH}} \
+        podman run --rm -v .:{{.MOUNT_PATH}} \
           -it docker.io/openapitools/openapi-generator-cli generate -g asciidoc \
-          -i {{.MNT_PATH}}/openapi.json -o {{.MNT_PATH}}/asciidoc
+          -i {{.MOUNT_PATH}}/openapi.json -o {{.MOUNT_PATH}}/asciidoc/src/site/asciidoc/generated
+    sources:
+      - openapi.json
+    generates:
+      - asciidoc/src/site/asciidoc/generated/index.adoc
+
+  asciidoc:
+    deps: [generate]
+    cmds:
+      - mvn -f asciidoc/pom.xml -P generate-docs generate-resources
+    sources:
+      - asciidoc/src/site/asciidoc/index.adoc
+    generates:
+      - asciidoc/target/static/documentation/index.html
+
+  open:
+    deps: [asciidoc]
+    cmds:
+      - xdg-open asciidoc/target/static/documentation/index.html
+    sources:
+      - openapi.json
+    generates:
+      - xdg-open asciidoc/target/static/documentation/index.html
+
+  publish:
+    cmds:
+      - |
+        podman run --rm --dns 8.8.8.8 -v .:{{.MOUNT_PATH}} \
+            -it docker.io/unexist/asciidoxy-builder:$(VERSION) \
+            -e CONFLUENCE_URL \
+            -e CONFLUENCE_SPACE_KEY \
+            -e CONFLUENCE_ANCESTOR_ID \
+            -e CONFLUENCE_USER \
+            -e CONFLUENCE_TOKEN \
+            sh -c "cd $(MOUNT_PATH) && mvn -f pom.xml -P generate-docs-and-publish generate-resources"
+
+docs: doxygen asciidoxy asciidoc
