@@ -3,9 +3,12 @@ syntax: glob
 **/*.iml
 *.iml
 
-target/
+**/target/
 .idea/
 .mvn/
 
 # Task
 .task
+
+# Generator
+asciidoc/src/site/asciidoc/generated
