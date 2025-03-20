@@ -29,6 +29,7 @@
     </developers>
 
     <modules>
+        <module>asciidoc</module>
         <module>todo-service</module>
     </modules>
 </project>
