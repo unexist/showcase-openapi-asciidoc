@@ -2,7 +2,6 @@ FROM docker.io/maven:3.9.9-eclipse-temurin-11-alpine
 
 MAINTAINER Christoph Kappel <christoph@unexist.dev>
 
-RUN apk add --no-cache ruby python3 py3-pip plantuml git make go
+RUN apk add --no-cache ruby python3 py3-pip plantuml make
 RUN gem install asciidoctor asciidoctor-rouge asciidoctor-diagram asciidoctor-multipage
 RUN pip3 install --break-system-packages openapi-generator-cli
-RUN go install github.com/swaggo/swag/cmd/swag@latest
