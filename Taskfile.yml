@@ -1,8 +1,8 @@
 version: '3'
 env:
   JAR_VERSION: '{{.JAR_VERSION | default "0.1"}}'
-  CONTAINER_VERSION: '{{.CONTAINER_VERSION | default "0.1"}}'
-  CONTAINER_IMAGE: '{{.CONTAINER_IMAGE | default "openapi-builder"}}'
+  IMAGE_VERSION: '{{.CONTAINER_VERSION | default "0.3"}}'
+  IMAGE_NAME: '{{.IMAGE_NAME | default "openapi-builder"}}'
   MOUNT_PATH: '{{.MOUNT_PATH | default "/openapi"}}'
   PORT: '{{.PORT | default "8080"}}'
   HOST: '{{.HOST | default "localhost"}}'
@@ -53,19 +53,21 @@ tasks:
       - mvn clean
       - rm -rf src/site/asciidoc/generated
 
-  generate:
+  openapi:
     cmds:
       - |
         podman run --rm -v .:{{.MOUNT_PATH}} \
-          -it docker.io/openapitools/openapi-generator-cli generate -g asciidoc \
-          -i {{.MOUNT_PATH}}/openapi.json -o {{.MOUNT_PATH}}/asciidoc/src/site/asciidoc/generated
+          -it docker.io/unexist/{{.IMAGE_NAME}}:{{.IMAGE_VERSION}} \
+          sh -c "openapi-generator-cli generate -g asciidoc --skip-validate-spec \
+          -i {{.MOUNT_PATH}}/openapi.json \
+          -o {{.MOUNT_PATH}}/asciidoc/src/site/asciidoc/generated"
     sources:
       - openapi.json
     generates:
       - asciidoc/src/site/asciidoc/generated/index.adoc
 
   asciidoc:
-    deps: [generate]
+    deps: [refresh-api, openapi]
     cmds:
       - mvn -f asciidoc/pom.xml -P generate-docs generate-resources
     sources:
@@ -76,20 +78,25 @@ tasks:
   open:
     deps: [asciidoc]
     cmds:
-      - xdg-open asciidoc/target/static/documentation/index.html
-    sources:
-      - openapi.json
-    generates:
-      - xdg-open asciidoc/target/static/documentation/index.html
+      - open asciidoc/target/static/documentation/index.html
+
+  image-build:
+    cmds:
+      - podman build -t {{.IMAGE_NAME}} -f infrastructure/Containerfile
+
+  image-push:
+    cmds:
+      - podman login docker.io
+      - podman push {{.IMAGE_NAME}}:latest docker.io/unexist/{{.IMAGE_NAME}}:{{.IMAGE_VERSION}}
 
   publish:
     cmds:
       - |
         podman run --rm --dns 8.8.8.8 -v .:{{.MOUNT_PATH}} \
-            -it docker.io/unexist/asciidoxy-builder:$(VERSION) \
+            -it docker.io/unexist/{{.IMAGE_NAME}}:{{.IMAGE_VERSION}} \
             -e CONFLUENCE_URL \
             -e CONFLUENCE_SPACE_KEY \
             -e CONFLUENCE_ANCESTOR_ID \
             -e CONFLUENCE_USER \
             -e CONFLUENCE_TOKEN \
-            sh -c "cd $(MOUNT_PATH) && mvn -f pom.xml -P generate-docs-and-publish generate-resources"
+            sh -c "mvn -f {{.MOUNT_PATH}}/pom.xml -P generate-docs-and-publish generate-resources"
