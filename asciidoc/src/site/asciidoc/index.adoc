@@ -1,6 +1,0 @@
-
-= OpenAPI - Todo-Service
-:toc: left
-:toclevels: 4
-
-include::generated/index.adoc[leveloffset=+1]
