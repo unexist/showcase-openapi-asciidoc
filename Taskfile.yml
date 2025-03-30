@@ -62,12 +62,14 @@ tasks:
       - |
         podman run --rm -v .:{{.MOUNT_PATH}} \
           -it docker.io/unexist/{{.IMAGE_NAME}}:{{.IMAGE_VERSION}} \
-          sh -c "openapi-generator-cli generate -g asciidoc \
-          --skip-validate-spec \
-          --release-note='{{.RELEASE_NOTES}}' \
-          --input-spec={{.MOUNT_PATH}}/asciidoc/src/site/asciidoc/spec/openapi.json \
-          --output={{.MOUNT_PATH}}/asciidoc/src/site/asciidoc \
-          --additional-properties=specDir=spec/,useIntroduction=true,licenseInfo='{{.LICENSE_INFO}}'"
+          sh -c "cd {{.MOUNT_PATH}} && ln -s asciidoc/src/site/asciidoc/spec spec \
+            && openapi-generator-cli generate -g asciidoc \
+            --skip-validate-spec \
+            --release-note='{{.RELEASE_NOTES}}' \
+            --input-spec=asciidoc/src/site/asciidoc/spec/openapi.json \
+            --output=asciidoc/src/site/asciidoc \
+            --additional-properties=specDir=spec/,useIntroduction=true,licenseInfo='{{.LICENSE_INFO}}' \
+          && unlink spec"
     sources:
       - asciidoc/src/site/asciidoc/spec/openapi.json
     generates:
