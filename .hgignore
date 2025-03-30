@@ -10,5 +10,7 @@ syntax: glob
 # Task
 .task
 
-# Generator
-asciidoc/src/site/asciidoc/generated
+# openapi-generator-cli
+asciidoc/src/site/asciidoc/index.adoc
+asciidoc/src/site/asciidoc/.openapi-generator
+asciidoc/src/site/asciidoc/.openapi-generator-ignore
