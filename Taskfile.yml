@@ -4,6 +4,8 @@ env:
   IMAGE_VERSION: '{{.CONTAINER_VERSION | default "0.3"}}'
   IMAGE_NAME: '{{.IMAGE_NAME | default "openapi-builder"}}'
   MOUNT_PATH: '{{.MOUNT_PATH | default "/openapi"}}'
+  RELEASE_NOTES: '{{.RELEASE_NOTES | default "Initial release"}}'
+  LICENSE_INFO: '{{.LICENSE_INFO | default "Apache License v2.0"}}'
   PORT: '{{.PORT | default "8080"}}'
   HOST: '{{.HOST | default "localhost"}}'
 
@@ -21,16 +23,16 @@ tasks:
   refresh-api:
     internal: true
     cmds:
-      - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/api.json' -H 'accept: */*' -o openapi.json"
+      - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/api.json' -H 'accept: */*' -o  asciidoc/src/site/asciidoc/spec/openapi.json"
     sources:
       - todo-service/target/todo-service-{{.JAR_VERSION}}-jar-with-dependencies.jar
     generates:
-      - openapi.json
+      - asciidoc/src/site/asciidoc/spec/openapi.json
 
   api:
     deps: [refresh-api]
     cmds:
-      - cat openapi.json | jq .
+      - cat asciidoc/src/site/asciidoc/spec/openapi.json | jq .
 
   test:
     cmds:
@@ -51,20 +53,25 @@ tasks:
   clean:
     cmds:
       - mvn clean
-      - rm -rf src/site/asciidoc/generated
+      - rm -rf asciidoc/src/site/asciidoc/index.adoc
+      - rm -rf asciidoc/src/site/asciidoc/.openapi-generator
+      - rm -rf asciidoc/src/site/asciidoc/.openapi-generator-ignore
 
   openapi:
     cmds:
       - |
         podman run --rm -v .:{{.MOUNT_PATH}} \
           -it docker.io/unexist/{{.IMAGE_NAME}}:{{.IMAGE_VERSION}} \
-          sh -c "openapi-generator-cli generate -g asciidoc --skip-validate-spec \
-          -i {{.MOUNT_PATH}}/openapi.json \
-          -o {{.MOUNT_PATH}}/asciidoc/src/site/asciidoc/generated"
+          sh -c "openapi-generator-cli generate -g asciidoc \
+          --skip-validate-spec \
+          --release-note='{{.RELEASE_NOTES}}' \
+          --input-spec={{.MOUNT_PATH}}/asciidoc/src/site/asciidoc/spec/openapi.json \
+          --output={{.MOUNT_PATH}}/asciidoc/src/site/asciidoc \
+          --additional-properties=specDir=spec/,useIntroduction=true,licenseInfo='{{.LICENSE_INFO}}'"
     sources:
-      - openapi.json
+      - asciidoc/src/site/asciidoc/spec/openapi.json
     generates:
-      - asciidoc/src/site/asciidoc/generated/index.adoc
+      - asciidoc/src/site/asciidoc/index.adoc
 
   asciidoc:
     deps: [refresh-api, openapi]
