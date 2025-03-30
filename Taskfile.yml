@@ -21,6 +21,7 @@ tasks:
       - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/todo' -H 'accept: */*' | jq ."
 
   refresh-api:
+    deps: [build]
     internal: true
     cmds:
       - "curl -X GET 'http://{{.HOST}}:{{.PORT}}/api.json' -H 'accept: */*' -o  asciidoc/src/site/asciidoc/spec/openapi.json"
@@ -47,6 +48,7 @@ tasks:
       - todo-service/target/todo-service-{{.JAR_VERSION}}-jar-with-dependencies.jar
 
   run:
+    deps: [build]
     cmds:
       - java -jar todo-service/target/todo-service-{{.JAR_VERSION}}-jar-with-dependencies.jar
 
