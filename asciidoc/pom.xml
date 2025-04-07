@@ -8,11 +8,11 @@
     <version>0.1</version>
 
     <parent>
-           <groupId>dev.unexist.showcase</groupId>
-           <artifactId>showcase-openapi-asciidoc</artifactId>
-           <version>0.1</version>
-           <relativePath>../pom.xml</relativePath>
-       </parent>
+        <groupId>dev.unexist.showcase</groupId>
+        <artifactId>showcase-openapi-asciidoc</artifactId>
+        <version>0.1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <properties>
         <asciidoctorj.diagram.version>2.0.5</asciidoctorj.diagram.version>
